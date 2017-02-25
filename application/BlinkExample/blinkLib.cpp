@@ -1,18 +1,10 @@
 #include <Arduino.h>
 
-#include "blink_lib.h"
-#include <Wire.h>
-#include <SPI.h>
-
-
-
-
-
-
+#include <blinkLib.h>
 
 
 void blink_setup(uint8_t pin) {
-  pinMode(pin, OUTPUT);     
+  pinMode(pin, OUTPUT);
 }
 
 

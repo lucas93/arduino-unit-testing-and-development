@@ -35,17 +35,29 @@ GetListOfSubDirectories( UNIT_TESTS_SUBDIRECTORIES              ${UNIT_TESTS_DIR
 GetListOfSubDirectories( MOCKS_SUBDIRECTORIES                   ${MOCKS_DIRECTORY})
 GetListOfSubDirectories( APPLICATION_SOURCES_SUBDIRECTORIES     ${APPLICATION_SOURCES_DIRECTORY})
 
-GetListOfAllFilesInSubDirectories(  UNIT_TEST_SOURCES   ${UNIT_TESTS_DIRECTORY}             "*.cpp")
-#GetListOfAllFilesInSubDirectories(  MOCKS_HEADERS       ${MOCKS_DIRECTORY}                  "*.h")
+GetListOfAllFilesInSubDirectories(  UNIT_TESTS_SOURCES  ${UNIT_TESTS_DIRECTORY}             "*.cpp")
+GetListOfAllFilesInSubDirectories(  UNIT_TESTS_HEADERS  ${UNIT_TESTS_DIRECTORY}             "*.h")
+GetListOfAllFilesInSubDirectories(  MOCKS_SOURCES       ${MOCKS_DIRECTORY}                  "*.cpp")
+GetListOfAllFilesInSubDirectories(  MOCKS_HEADERS       ${MOCKS_DIRECTORY}                  "*.h")
 GetListOfAllFilesInSubDirectories(  APPLICATION_SOURCES ${APPLICATION_SOURCES_DIRECTORY}    "*.cpp")
-#GetListOfAllFilesInSubDirectories(  APPLICATION_HEADERS ${APPLICATION_SOURCES_DIRECTORY}    "*.h")
+GetListOfAllFilesInSubDirectories(  APPLICATION_HEADERS ${APPLICATION_SOURCES_DIRECTORY}    "*.h")
 
-add_executable(unit_tests   ${UNIT_TEST_SOURCES}    ${APPLICATION_SOURCES})
+add_executable(unit_tests
+    ${UNIT_TESTS_SOURCES}
+    ${APPLICATION_SOURCES}
+    ${MOCKS_SOURCES}
+    ${MOCKS_HEADERS})   # QtCreator has problems with displaying header files in project tree if they are not a part of executable
 
-include_directories(${MOCKS_SUBDIRECTORIES})
-target_include_directories(unit_tests   PUBLIC
-   "${APPLICATION_SOURCES_SUBDIRECTORIES}   ${MOCKS_SUBDIRECTORIES} \
-    ${GOOGLE_TEST_INCLUDE_DIRECTORY}        ${GOOGLE_MOCK_INCLUDE_DIRECTORY}")
+include_directories(
+    ${APPLICATION_SOURCES_SUBDIRECTORIES}
+    ${MOCKS_SUBDIRECTORIES}
+    ${UNIT_TESTS_SUBDIRECTORIES}
+    ${GOOGLE_TEST_INCLUDE_DIRECTORY}
+    ${GOOGLE_MOCK_INCLUDE_DIRECTORY})
+
+#target_include_directories(unit_tests   PUBLIC
+#   "${APPLICATION_SOURCES_SUBDIRECTORIES}   ${MOCKS_SUBDIRECTORIES} \
+#    ${GOOGLE_TEST_INCLUDE_DIRECTORY}        ${GOOGLE_MOCK_INCLUDE_DIRECTORY}")
 
 target_link_libraries(unit_tests gtest gmock_main)
 add_test(NAME unit_tests COMMAND unit_tests)

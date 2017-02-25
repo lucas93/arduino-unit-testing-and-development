@@ -32,6 +32,7 @@ protected:
 
 void setup() {                
     blink_setup(); // Setup for blinking
+    Serial.begin(9600);
 }
 
 void loop() {

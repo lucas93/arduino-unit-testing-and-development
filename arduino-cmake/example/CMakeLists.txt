@@ -13,10 +13,3 @@ generate_arduino_firmware(blink
     ARDLIBS SPI Wire
     BOARD uno)
 
-
-# Alternative: by variables
-#set(blink_SRCS blink.cpp)
-#set(blink_LIBS blink_lib)
-#set(blink_BOARD uno)
-#
-#generate_arduino_firmware(blink)
