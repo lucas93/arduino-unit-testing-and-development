@@ -72,10 +72,11 @@ void loop(void);
 #endif
 
 #include <gmock/gmock.h>
+#include <memory>
 
 #define UNUSED(expr) do { (void)(expr); } while (0)
 
-class ArduinoMock {
+class ArduinoMockImplementation {
   public:
     MOCK_METHOD2(pinMode, void (uint8_t, uint8_t));
     MOCK_METHOD2(analogWrite, void (uint8_t, int));
@@ -93,7 +94,14 @@ class ArduinoMock {
     MOCK_METHOD1(detachInterrupt, void (uint8_t));
     MOCK_METHOD0(setup, void (void));
 };
-ArduinoMock* arduinoMockInstance();
-void releaseArduinoMock();
+
+class ArduinoMockInstancePointer
+{
+  ArduinoMockImplementation arduino;
+public:
+  ArduinoMockInstancePointer();
+  ArduinoMockImplementation& operator*();
+};
+
 
 #endif // ARDUINO_H
