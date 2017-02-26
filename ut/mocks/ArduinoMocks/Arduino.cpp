@@ -1,7 +1,6 @@
 #include "Arduino.h"
 #include <memory>
 
-
 ArduinoMockImplementation* arduinoMock = nullptr;
 
 ArduinoMockInstancePointer::ArduinoMockInstancePointer()
@@ -14,65 +13,53 @@ ArduinoMockImplementation &ArduinoMockInstancePointer::operator*()
   return arduino;
 }
 
-void pinMode(uint8_t a, uint8_t b) {
-  arduinoMock->pinMode(a, b);
-}
-void digitalWrite(uint8_t a, uint8_t b) {
-  arduinoMock->digitalWrite(a, b);
-}
+#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_0(RETURN_TYPE, FUNCTION_NAME)\
+RETURN_TYPE FUNCTION_NAME() \
+{\
+  return arduinoMock->FUNCTION_NAME();\
+}\
 
-int digitalRead(uint8_t a) {
-  return arduinoMock->digitalRead(a);
-}
+#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(RETURN_TYPE, FUNCTION_NAME, TYPE1, ARG1)\
+RETURN_TYPE FUNCTION_NAME(TYPE1 ARG1) \
+{\
+  return arduinoMock->FUNCTION_NAME(ARG1);\
+}\
 
-int analogRead(uint8_t a) {
-  return arduinoMock->analogRead(a);
-}
-void analogReference(uint8_t mode) {
-  arduinoMock->analogReference(mode);
-}
+#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(RETURN_TYPE, FUNCTION_NAME, TYPE1, ARG1, TYPE2, ARG2)\
+RETURN_TYPE FUNCTION_NAME(TYPE1 ARG1, TYPE2 ARG2) \
+{\
+  return arduinoMock->FUNCTION_NAME(ARG1, ARG2);\
+}\
 
-void analogWrite(uint8_t a, int b) {
-  arduinoMock->analogWrite(a, b);
-}
+#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_3(RETURN_TYPE, FUNCTION_NAME, TYPE1, ARG1, TYPE2, ARG2, TYPE3, ARG3)\
+RETURN_TYPE FUNCTION_NAME(TYPE1 ARG1, TYPE2 ARG2, TYPE3 ARG3) \
+{\
+  return arduinoMock->FUNCTION_NAME(ARG1, ARG2, ARG3);\
+}\
 
-unsigned long millis(void) {
-  return arduinoMock->millis();
-}
-unsigned long micros(void) {
-  return arduinoMock->micros();
-}
-void delay(unsigned long a) {
-  arduinoMock->delay(a);
-}
-void delayMicroseconds(unsigned int us) {
-  arduinoMock->delayMicroseconds(us);
-}
+#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_4(RETURN_TYPE, FUNCTION_NAME, TYPE1, ARG1, TYPE2, ARG2, TYPE3, ARG3, TYPE4, ARG4)\
+RETURN_TYPE FUNCTION_NAME(TYPE1 ARG1, TYPE2 ARG2, TYPE3 ARG3, TYPE4 ARG4) \
+{\
+  return arduinoMock->FUNCTION_NAME(ARG1, ARG2, ARG3, ARG4);\
+}\
 
-unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout) {
-  UNUSED(pin);
-  UNUSED(state);
-  UNUSED(timeout);
-  return 0;
-}
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, pinMode, uint8_t, a, uint8_t, b)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, digitalWrite, uint8_t, a, uint8_t, b)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(int, digitalRead, uint8_t, a)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(int, analogRead, uint8_t, a)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(void, analogReference, uint8_t, mode)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, analogWrite, uint8_t, a, int, b)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_0(unsigned long, millis)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_0(unsigned long, micros)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(void, delay, unsigned long, a)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(void, delay, unsigned int, us)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_3(unsigned long, pulseIn, uint8_t, pin, uint8_t, state, unsigned long, timeout)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_4(void, shiftOut, uint8_t, dataPin, uint8_t, clockPin, uint8_t, bitOrder, uint8_t, val)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_3(uint8_t, shiftIn, uint8_t, dataPin, uint8_t, clockPin, uint8_t, bitOrder)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(void, detachInterrupt, uint8_t, pin)
 
-void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder,
-              uint8_t val) {
-  UNUSED(dataPin);
-  UNUSED(clockPin);
-  UNUSED(bitOrder);
-  UNUSED(val);
-}
 
-uint8_t shiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder) {
-  UNUSED(dataPin);
-  UNUSED(clockPin);
-  UNUSED(bitOrder);
-  return 0;
-}
-
-void attachInterrupt(uint8_t, void (*)(void), int mode) {
+void attachInterrupt(uint8_t, void (*)(void), int mode) { //TODO mock implementation
   UNUSED(mode);
 }
 
-void detachInterrupt(uint8_t) {}

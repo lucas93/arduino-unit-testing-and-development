@@ -89,6 +89,7 @@ class ArduinoMockImplementation {
     MOCK_METHOD0(millis, unsigned long ());
     MOCK_METHOD0(micros, unsigned long ());
     MOCK_METHOD3(pulseIn, unsigned long (uint8_t, uint8_t, unsigned long));
+    MOCK_METHOD3(shiftIn, uint8_t (uint8_t, uint8_t, uint8_t));
     MOCK_METHOD4(shiftOut, void (uint8_t, uint8_t, uint8_t, uint8_t));
     MOCK_METHOD3(attachInterrupt, void (uint8_t, void (*)(void), int));
     MOCK_METHOD1(detachInterrupt, void (uint8_t));
