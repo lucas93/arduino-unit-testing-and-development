@@ -5,20 +5,38 @@
 #include <Arduino.h>
 #include <blinkLib.h>
 
-TEST(BlinkTests, ShouldBlinkSetupCorrectly)
+TEST(BlinkLibTests, ShouldSetupCorrectly)
 {
-  ArduinoMockInstancePointer arduinoMock{};
+  ArduinoMockWrapper Arduino{};
   auto pin = 13;
-  EXPECT_CALL(*arduinoMock, pinMode(pin, OUTPUT));
+  EXPECT_CALL(*Arduino, pinMode(pin, OUTPUT));
   blink_setup(pin);
 }
 
-TEST(BlinkTests, WhenSetupCorrectly_ShouldBlinkCorrectly)
+TEST(BlinkLibTests, WhenSetupCorrectly_ShouldBlinkCorrectly)
 {
-  ArduinoMockInstancePointer arduinoMock{};
+  ArduinoMockWrapper Arduino{};
   auto pin = 13;
-  EXPECT_CALL(*arduinoMock, pinMode(pin, OUTPUT));
-  blink_setup(pin);
+  auto duration = 500ul;
+  EXPECT_CALL(*Arduino, pinMode(pin, OUTPUT));
+  EXPECT_CALL(*Arduino, digitalWrite(pin, HIGH));
+  EXPECT_CALL(*Arduino, delay(duration)).Times(2);
+  EXPECT_CALL(*Arduino, digitalWrite(pin, LOW));
 
-//  EXPECT_CALL(*arduinoMock, )
+  blink_setup(pin);
+  blink(duration);
+}
+
+TEST(BlinkLibTests, WhenSetupCorrectly_ShouldBlinkCorrectly2)
+{
+  ArduinoMockWrapper Arduino{};
+  auto pin = 13;
+  auto duration = 500ul;
+  EXPECT_CALL(*Arduino, pinMode(pin, OUTPUT));
+  EXPECT_CALL(*Arduino, digitalWrite(pin, HIGH));
+  EXPECT_CALL(*Arduino, delay(duration)).Times(2);
+  EXPECT_CALL(*Arduino, digitalWrite(pin, LOW));
+
+  blink_setup(pin);
+  blink(duration);
 }

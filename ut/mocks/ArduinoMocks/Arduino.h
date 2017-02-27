@@ -96,11 +96,12 @@ class ArduinoMockImplementation {
     MOCK_METHOD0(setup, void (void));
 };
 
-class ArduinoMockInstancePointer
+class ArduinoMockWrapper
 {
-  ArduinoMockImplementation arduino;
+  ArduinoMockImplementation arduinoInstance;
 public:
-  ArduinoMockInstancePointer();
+  ArduinoMockWrapper();
+  ~ArduinoMockWrapper();
   ArduinoMockImplementation& operator*();
 };
 
