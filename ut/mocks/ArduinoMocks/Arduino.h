@@ -96,12 +96,12 @@ class ArduinoMockImplementation {
     MOCK_METHOD0(setup, void (void));
 };
 
-class ArduinoMockWrapper
+class ArduinoMockInstanceGuard
 {
   ArduinoMockImplementation arduinoInstance;
 public:
-  ArduinoMockWrapper();
-  ~ArduinoMockWrapper();
+  ArduinoMockInstanceGuard();
+  ~ArduinoMockInstanceGuard();
   ArduinoMockImplementation& operator*();
 };
 

@@ -5,12 +5,6 @@
 #include <SPI.h>
 
 
-
-
-
-
-
-
 void blink_setup(uint8_t pin) {
   pinMode(pin, OUTPUT);     
 }

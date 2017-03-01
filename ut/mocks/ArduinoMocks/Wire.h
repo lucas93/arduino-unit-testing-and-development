@@ -6,7 +6,7 @@
 
 #define BUFFER_LENGTH 32
 
-class WireMock
+class WireMockImplementation
 {
 
 public:
@@ -16,7 +16,6 @@ public:
   MOCK_METHOD1(beginTransmission, void(uint8_t));
   MOCK_METHOD0(endTransmission, uint8_t(void));
   MOCK_METHOD1(endTransmission, uint8_t(uint8_t));
-
   MOCK_METHOD2(requestFrom, uint8_t(uint8_t, uint8_t));
   MOCK_METHOD3(requestFrom, uint8_t(uint8_t, uint8_t, uint8_t));
   MOCK_METHOD2(requestFrom, uint8_t(int, int));
@@ -41,7 +40,7 @@ class WireMockInstanceWrapper
 
 };
 
-WireMock* WireMockInstance();
+WireMockImplementation* WireMockInstance();
 void releaseWireMock();
 
 #endif

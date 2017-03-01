@@ -4,19 +4,19 @@
 
 ArduinoMockImplementation* arduinoInstancePointer = nullptr;
 
-ArduinoMockWrapper::ArduinoMockWrapper()
+ArduinoMockInstanceGuard::ArduinoMockInstanceGuard()
 {
   EXPECT_EQ(nullptr, arduinoInstancePointer)
       << "Are you trying to instantiate multiple ArduinoMockWrappers in the same scope?";
   arduinoInstancePointer = &arduinoInstance;
 }
 
-ArduinoMockWrapper::~ArduinoMockWrapper()
+ArduinoMockInstanceGuard::~ArduinoMockInstanceGuard()
 {
   arduinoInstancePointer = nullptr;
 }
 
-ArduinoMockImplementation& ArduinoMockWrapper::operator*()
+ArduinoMockImplementation& ArduinoMockInstanceGuard::operator*()
 {
   return arduinoInstance;
 }
