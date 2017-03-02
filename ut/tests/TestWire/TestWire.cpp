@@ -26,8 +26,11 @@ template< typename MockImplementationTypename>
 class MockGlobalObjectTemplate
 {
   using ThisClassType = MockGlobalObjectTemplate<MockImplementationTypename>;
+  MockGlobalObjectTemplate& operator=(const MockGlobalObjectTemplate& other) = delete;
+  MockGlobalObjectTemplate(const MockGlobalObjectTemplate& other) = delete;
 
 public:
+  MockGlobalObjectTemplate(){}
   MockImplementationTypename* mockPointer = nullptr;
 
   static ThisClassType& getGlobalInstanceReference()
@@ -37,10 +40,6 @@ public:
   }
   IMPLEMENT_FORWARDING_CALL_TO_MOCK(int, foo);
 };
-
-
-using MockGlobalObject = MockGlobalObjectTemplate<SampleMockImplementation>;
-
 
 
 template<typename MockImplementationTypename,
@@ -71,10 +70,14 @@ public:
   }
 };
 
+using MockGlobalObject = MockGlobalObjectTemplate<SampleMockImplementation>;
 using MockLocalObject = MockLocalObjectTemplate<SampleMockImplementation>;
+
 
 using ::testing::Return;
 using ::testing::_;
+
+
 
 auto& globalObj = MockGlobalObject::getGlobalInstanceReference();
 
