@@ -13,35 +13,27 @@ RETURN_TYPE FUNCTION_NAME (Args... args)\
 }\
 
 
-#define REAL_MOCK_IMPLEMENTATION(MockName)\
+
+#define GLOBAL_MOCK_DEFINISIONS(MockName)\
 struct MockName##_Implementation\
-
-REAL_MOCK_IMPLEMENTATION(Serial)
-{
-  MOCK_METHOD0(foo, int() );
-  MOCK_METHOD1(foo, int(int) );
-  MOCK_METHOD2(foo, int(int, int) );
-  MOCK_METHOD0(boo, int() );
-  MOCK_METHOD1(boo, int(int) );
-  MOCK_METHOD2(boo, int(int, int) );
-};
-
-
-#define GLOBAL_MOCK_IMPLEMENTATION(MockName)\
+{\
+  MOCK_METHOD0(foo, int() );\
+  MOCK_METHOD1(foo, int(int) );\
+  MOCK_METHOD2(foo, int(int, int) );\
+  MOCK_METHOD0(boo, int() );\
+  MOCK_METHOD1(boo, int(int) );\
+  MOCK_METHOD2(boo, int(int, int) );\
+};  \
 struct MockName##_PointerClass\
 {\
   MockName##_Implementation* mockPointer = nullptr;\
 };\
 struct MockName##_GlobalObjectMethodImplementation : public MockName##_PointerClass\
-
-GLOBAL_MOCK_IMPLEMENTATION(Serial)
-{
-  MOCK_GLOBAL_METHOD(int, foo)
-  MOCK_GLOBAL_METHOD(int, boo)
-};
-
-#define GLOBAL_MOCK_DEFINISIONS(MockName)\
-class MockName##_GlobalObject : public Serial_GlobalObjectMethodImplementation\
+{\
+  MOCK_GLOBAL_METHOD(int, foo)\
+  MOCK_GLOBAL_METHOD(int, boo)\
+};\
+class MockName##_GlobalObject : public MockName##_GlobalObjectMethodImplementation\
 {\
   MockName##_GlobalObject& operator=(const MockName##_GlobalObject& other) = delete;\
   MockName##_GlobalObject(const MockName##_GlobalObject& other) = delete;\
@@ -55,7 +47,7 @@ public:\
     return globalInstance;\
   }\
 };\
-class MockName##_LocalObject : public Serial_Implementation\
+class MockName##_LocalObject : public MockName##_Implementation\
 {\
   MockName##_GlobalObject& globalObj = MockName##_GlobalObject::getGlobalInstanceReference();\
 \
