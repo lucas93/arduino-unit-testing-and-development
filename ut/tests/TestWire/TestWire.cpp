@@ -40,76 +40,72 @@ GLOBAL_MOCK_IMPLEMENTATION(Serial)
   MOCK_GLOBAL_METHOD(int, boo)
 };
 
+#define GLOBAL_MOCK_DEFINISIONS(MockName)\
+class MockName##_GlobalObject : public Serial_GlobalObjectMethodImplementation\
+{\
+  MockName##_GlobalObject& operator=(const MockName##_GlobalObject& other) = delete;\
+  MockName##_GlobalObject(const MockName##_GlobalObject& other) = delete;\
+\
+public:\
+  MockName##_GlobalObject(){}\
+\
+  static MockName##_GlobalObject& getGlobalInstanceReference()\
+  {\
+    static MockName##_GlobalObject globalInstance;\
+    return globalInstance;\
+  }\
+};\
+class MockName##_LocalObject : public Serial_Implementation\
+{\
+  MockName##_GlobalObject& globalObj = MockName##_GlobalObject::getGlobalInstanceReference();\
+\
+public:\
+  MockName##_LocalObject()\
+  {\
+    EXPECT_EQ(nullptr, globalObj.mockPointer)\
+      << "Are you trying to instantiate multiple local mock objects in one scope?";\
+    globalObj.mockPointer = this;\
+  }\
+\
+  ~MockName##_LocalObject()\
+  {\
+    EXPECT_NE(nullptr, globalObj.mockPointer);\
+    globalObj.mockPointer = nullptr;\
+  }\
+};\
+auto& MockName = MockName##_GlobalObject::getGlobalInstanceReference()\
 
-//#define GLOBAL_MOCK_DEFINISIONS(MockName)
-class MockGlobalObject : public Serial_GlobalObjectMethodImplementation
-{
-  MockGlobalObject& operator=(const MockGlobalObject& other) = delete;
-  MockGlobalObject(const MockGlobalObject& other) = delete;
-
-public:
-  MockGlobalObject(){}
-
-
-  static MockGlobalObject& getGlobalInstanceReference()
-  {
-    static MockGlobalObject globalInstance;
-    return globalInstance;
-  }
-
-};
-
-
-class MockLocalObject : public Serial_Implementation
-{
-
-  MockGlobalObject& globalObj = MockGlobalObject::getGlobalInstanceReference();
-
-public:
-  MockLocalObject()
-  {
-    EXPECT_EQ(nullptr, globalObj.mockPointer)
-      << "Are you trying to instantiate multiple local mock objects in one scope?";
-    globalObj.mockPointer = this;
-  }
-
-  ~MockLocalObject()
-  {
-    EXPECT_NE(nullptr, globalObj.mockPointer);
-    globalObj.mockPointer = nullptr;
-  }
-};
+GLOBAL_MOCK_DEFINISIONS(Serial);
 
 using ::testing::Return;
 using ::testing::_;
 
-auto& globalObj = MockGlobalObject::getGlobalInstanceReference();
-
 TEST(SomeMock, FirstTest)
 {
-  MockLocalObject obj;
+  Serial_LocalObject obj;
 
   EXPECT_CALL(obj, foo()).WillOnce(Return(1) );
   EXPECT_CALL(obj, foo(2)).WillOnce(Return(2) );
   EXPECT_CALL(obj, foo(3, 3)).WillOnce(Return(3) );
   EXPECT_CALL(obj, boo(3, 3)).WillOnce(Return(4) );
 
-  EXPECT_EQ(1, globalObj.foo());
-  EXPECT_EQ(2, globalObj.foo(2));
-  EXPECT_EQ(3, globalObj.foo(3, 3));
-  EXPECT_EQ(4, globalObj.boo(3, 3));
+  EXPECT_EQ(1, Serial.foo());
+  EXPECT_EQ(2, Serial.foo(2));
+  EXPECT_EQ(3, Serial.foo(3, 3));
+  EXPECT_EQ(4, Serial.boo(3, 3));
 }
+
 TEST(SomeMock, SecondTest)
 {
-  MockLocalObject obj;
+  Serial_LocalObject obj;
 
   EXPECT_CALL(obj, foo()).WillOnce(Return(1) );
   EXPECT_CALL(obj, foo(2)).WillOnce(Return(2) );
   EXPECT_CALL(obj, foo(3, 3)).WillOnce(Return(3) );
 
-  EXPECT_EQ(1, globalObj.foo());
-  EXPECT_EQ(2, globalObj.foo(2));
-  EXPECT_EQ(3, globalObj.foo(3, 3));
+  EXPECT_EQ(1, Serial.foo());
+  EXPECT_EQ(2, Serial.foo(2));
+  EXPECT_EQ(3, Serial.foo(3, 3));
 }
 
 
