@@ -71,6 +71,8 @@ void loop(void);
 } // extern "C"
 #endif
 
+#include "HardwareSerial.h"
+
 #include <gmock/gmock.h>
 #include <memory>
 
