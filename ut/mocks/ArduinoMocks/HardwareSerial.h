@@ -25,102 +25,36 @@
 
 #include "GlobalMockTemplate.h"
 #include "WString.h"
+#include "Stream.h"
 #include "gmock/gmock.h"
 
+GLOBAL_MOCK_DEFINISION_H(
+    Serial,
+    {
+      MOCK_METHOD1(write, size_t(const char *str));
+      MOCK_METHOD2(write, size_t(const uint8_t *buffer, size_t size));
+      MOCK_METHOD2(print, size_t(double, int));
+      MOCK_METHOD2(println, size_t(int, int));
+      MOCK_METHOD0(println, size_t(void));
+      MOCK_METHOD1(begin, uint8_t(uint16_t));
+      MOCK_METHOD0(end, void());
+      MOCK_METHOD0(available, uint8_t());
+      MOCK_METHOD0(read, uint8_t());
+      MOCK_METHOD0(flush, void());
+      // inherited from Stream
+      STREAM_MOCK_METHODS();
+    },
+    {
+      MOCK_GLOBAL_METHOD(write, size_t);
+      MOCK_GLOBAL_METHOD(flush, void);
+      MOCK_GLOBAL_METHOD(end, void);
+      MOCK_GLOBAL_METHOD(begin, uint8_t);
+      MOCK_GLOBAL_METHOD(read, uint8_t);
+      MOCK_GLOBAL_METHOD(available, uint8_t);
+      // inherited from Stream
+      STREAM_MOCK_GLOBAL_METHODS();
+    })
 
-class HardwareSerial
-{
-public:
-
-  void begin(unsigned long);
-  void begin(unsigned long, uint8_t);
-  void end();
-  virtual int available(void);
-  virtual int peek(void);
-  virtual int read(void);
-  virtual void flush(void);
-  virtual size_t write(uint8_t);
-  inline size_t write(unsigned long n) { return write((uint8_t)n); }
-  inline size_t write(long n) { return write((uint8_t)n); }
-  inline size_t write(unsigned int n) { return write((uint8_t)n); }
-  inline size_t write(int n) { return write((uint8_t)n); }
-
-  void setTimeout(unsigned long timeout);  // sets maximum milliseconds to wait for stream data, default is 1 second
-
-  bool find(char *target);   // reads data from the stream until the target string is found
-  // returns true if target string is found, false if timed out (see setTimeout)
-
-  bool find(char *target, size_t length);   // reads data from the stream until the target string of given length is found
-  // returns true if target string is found, false if timed out
-
-  bool findUntil(char *target, char *terminator);   // as find but search ends if the terminator string is found
-
-  bool findUntil(char *target, size_t targetLen, char *terminate, size_t termLen);   // as above but search ends if the terminate string is found
-
-
-  long parseInt(); // returns the first valid (long) integer value from the current position.
-  // initial characters that are not digits (or the minus sign) are skipped
-  // integer is terminated by the first character that is not a digit.
-
-  float parseFloat();               // float version of parseInt
-
-  size_t readBytes( char *buffer, size_t length); // read chars from stream into buffer
-  // terminates if length characters have been read or timeout (see setTimeout)
-  // returns the number of characters placed in the buffer (0 means no valid data found)
-
-  size_t readBytesUntil( char terminator, char *buffer, size_t length); // as readBytes with terminator character
-  // terminates if length characters have been read, timeout, or if the terminator character  detected
-  // returns the number of characters placed in the buffer (0 means no valid data found)
-
-  // Arduino String functions to be added here
-  String readString();
-  String readStringUntil(char terminator);
-
-  protected:
-  long parseInt(char skipChar); // as above but the given skipChar is ignored
-  // as above but the given skipChar is ignored
-  // this allows format characters (typically commas) in values to be ignored
-
-  float parseFloat(char skipChar);  // as above but the given skipChar is ignored
-};
-
-class SerialMock {
-  public:
-    MOCK_METHOD0(getWriteError, int());
-    MOCK_METHOD0(clearWriteError, void());
-    MOCK_METHOD1(write, size_t(uint8_t));
-    MOCK_METHOD1(write, size_t(const char *str));
-    MOCK_METHOD2(write, size_t(const uint8_t *buffer, size_t size));
-
-    MOCK_METHOD1(print, size_t(const char[]));
-    MOCK_METHOD1(print, size_t(char));
-    MOCK_METHOD2(print, size_t(unsigned char, int));
-    MOCK_METHOD2(print, size_t(int, int));
-    MOCK_METHOD2(print, size_t(unsigned int, int));
-    MOCK_METHOD2(print, size_t(long, int));
-    MOCK_METHOD2(print, size_t(unsigned long, int));
-    MOCK_METHOD2(print, size_t(double, int));
-
-    MOCK_METHOD1(println, size_t(const char[]));
-    MOCK_METHOD1(println, size_t(char));
-    MOCK_METHOD2(println, size_t(int, int));
-    MOCK_METHOD0(println, size_t(void));
-
-    MOCK_METHOD1(begin, uint8_t(uint16_t));
-
-    MOCK_METHOD0(available, uint8_t());
-    MOCK_METHOD0(read, uint8_t());
-
-    MOCK_METHOD0(flush, void());
-
-    /* Not implemented yet
-    MOCK_METHOD2(println, size_t(unsigned char, int));
-    MOCK_METHOD2(println, size_t(unsigned int, int));
-    MOCK_METHOD2(println, size_t(long, int));
-    MOCK_METHOD2(println, size_t(unsigned long, int));
-    MOCK_METHOD2(println, size_t(double, int));
-    */
-};
 
 // Define config for Serial.begin(baud, config);
 #define SERIAL_5N1 0x00

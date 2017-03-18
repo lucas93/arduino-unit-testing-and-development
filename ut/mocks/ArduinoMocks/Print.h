@@ -1,10 +1,8 @@
 #ifndef PRINT_H
 #define PRINT_H
 
-#include <inttypes.h>
 #include <stdio.h> // for size_t
 
-#include "WString.h"
 #include "Printable.h"
 
 #define DEC 10
@@ -12,7 +10,20 @@
 #define OCT 8
 #define BIN 2
 
-class Print
+#define PRINT_MOCK_METHODS()\
+MOCK_METHOD0(getWriteError, int());\
+MOCK_METHOD0(clearWriteError, void());\
+MOCK_METHOD1(print, size_t(const String&));\
+MOCK_METHOD1(println, size_t(const String&));\
+
+#define PRINT_MOCK_GLOBAL_METHODS()\
+MOCK_GLOBAL_METHOD(getWriteError, int);\
+MOCK_GLOBAL_METHOD(clearWriteError, void);\
+MOCK_GLOBAL_METHOD(print, size_t);\
+MOCK_GLOBAL_METHOD(println, size_t);\
+
+
+/*class Print
 {
   public:
     int getWriteError() { return write_error; }
@@ -45,6 +56,6 @@ class Print
     size_t println(double, int = 2);
     size_t println(const Printable&);
     size_t println(void);
-};
+};*/
 
 #endif //PRINT_H

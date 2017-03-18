@@ -5,6 +5,7 @@
 #include <gmock/gmock.h>
 #include "GlobalMockTemplate.h"
 #include "WString.h"
+#include "Stream.h"
 
 #define BUFFER_LENGTH 32
 
@@ -26,19 +27,8 @@ GLOBAL_MOCK_DEFINISION_H(
     MOCK_METHOD0(flush, void());
     MOCK_METHOD1(onReceive, void( void (*)(int) ));
     MOCK_METHOD1(onRequest, void( void (*)(int) ));
-
     //inherited from Stream
-    MOCK_METHOD1(setTimeout, void(unsigned long));
-    MOCK_METHOD1(find, bool(char*));
-    MOCK_METHOD2(find, bool(char*, size_t));
-    MOCK_METHOD2(findUntil, bool(char*, char*));
-    MOCK_METHOD4(findUntil, bool(char*, size_t, char*, size_t));
-    MOCK_METHOD0(parseInt, long());
-    MOCK_METHOD0(parseFloat, float());
-    MOCK_METHOD2(readBytes, size_t(char *, size_t));
-    MOCK_METHOD3(readBytesUntil, size_t(char, char *, size_t));
-    MOCK_METHOD0(readString, String());
-    MOCK_METHOD1(readStringUntil, String(char));
+    STREAM_MOCK_METHODS()
   },
   {
     MOCK_GLOBAL_METHOD(begin, void);
@@ -52,16 +42,27 @@ GLOBAL_MOCK_DEFINISION_H(
     MOCK_GLOBAL_METHOD(flush, void);
     MOCK_GLOBAL_METHOD(onReceive, void);
     MOCK_GLOBAL_METHOD(onRequest, void);
-    MOCK_GLOBAL_METHOD(setTimeout, void);
-    MOCK_GLOBAL_METHOD(find, bool);
-    MOCK_GLOBAL_METHOD(findUntil, bool);
-    MOCK_GLOBAL_METHOD(parseInt, long);
-    MOCK_GLOBAL_METHOD(parseFloat, float);
-    MOCK_GLOBAL_METHOD(readBytes, size_t);
-    MOCK_GLOBAL_METHOD(readBytesUntil, size_t);
-    MOCK_GLOBAL_METHOD(readString, String);
-    MOCK_GLOBAL_METHOD(readStringUntil, String);
-
+    //inherited from Stream
+    STREAM_MOCK_GLOBAL_METHODS()
   });
+
+//class Print
+//{
+//    int getWriteError() { return write_error; }
+//    void clearWriteError() { setWriteError(0); }
+//    size_t write(const char *str);
+//    virtual size_t write(const uint8_t *buffer, size_t size);
+
+//    size_t print(const String &);
+//    size_t print(char);
+//    size_t print(int, int = DEC);
+//    size_t print(const Printable&);
+
+//    size_t println(const String &s);
+//    size_t println(char);
+//    size_t println(int, int = DEC);
+//    size_t println(const Printable&);
+//    size_t println(void);
+//};
 
 #endif

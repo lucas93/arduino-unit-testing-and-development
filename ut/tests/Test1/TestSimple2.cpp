@@ -3,9 +3,12 @@
 
 #include <BaseClass.h>
 #include <SampleMock.h>
+#include <WString.h>
 
 using ::testing::Return;
 using ::testing::_;
+
+
 
 // Mocked test
 TEST(TeaBreakTest2, MorningTea2)
