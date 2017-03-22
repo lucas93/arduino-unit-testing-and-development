@@ -46,23 +46,4 @@ GLOBAL_MOCK_DEFINISION_H(
     STREAM_MOCK_GLOBAL_METHODS()
   });
 
-//class Print
-//{
-//    int getWriteError() { return write_error; }
-//    void clearWriteError() { setWriteError(0); }
-//    size_t write(const char *str);
-//    virtual size_t write(const uint8_t *buffer, size_t size);
-
-//    size_t print(const String &);
-//    size_t print(char);
-//    size_t print(int, int = DEC);
-//    size_t print(const Printable&);
-
-//    size_t println(const String &s);
-//    size_t println(char);
-//    size_t println(int, int = DEC);
-//    size_t println(const Printable&);
-//    size_t println(void);
-//};
-
 #endif

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef Printable_h
 #define Printable_h
 
