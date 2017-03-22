@@ -71,6 +71,8 @@ void loop(void);
 } // extern "C"
 #endif
 
+#include "WCharacter.h"
+#include "WString.h"
 #include "HardwareSerial.h"
 
 #include <gmock/gmock.h>
