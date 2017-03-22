@@ -13,6 +13,7 @@ RETURN_TYPE FUNCTION_NAME (Args... args)\
 
 
 #define GLOBAL_MOCK_DEFINISION_H(MockName, MOCK_IMPL, MOCK_GLOBAL_IMPL)\
+  namespace MockName##_MockNamestace {\
 struct MockName##_Implementation\
 \
   MOCK_IMPL\
@@ -57,10 +58,11 @@ public:\
     globalObj.mockPointer = nullptr;\
   }\
 };\
-extern MockName##_GlobalObject& MockName;\
-//auto& MockName = MockName##_GlobalObject::getGlobalInstanceReference()\//
+} \
+extern MockName##_MockNamestace::MockName##_GlobalObject& MockName;\
+using MockName##_LocalMock = MockName##_MockNamestace::MockName##_LocalMock;
 
 #define GLOBAL_MOCK_DEFINISION_CPP(MockName)\
-  MockName##_GlobalObject& MockName = MockName##_GlobalObject::getGlobalInstanceReference()\
+  MockName##_MockNamestace::MockName##_GlobalObject& MockName = MockName##_MockNamestace::MockName##_GlobalObject::getGlobalInstanceReference()\
 
 #endif // GLOBAL_MOCK_TEMPLATE_H
