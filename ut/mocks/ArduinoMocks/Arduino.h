@@ -100,6 +100,8 @@ class ArduinoMockImplementation {
     MOCK_METHOD0(setup, void (void));
 };
 
+extern ArduinoMockImplementation* arduinoInstancePointer;
+
 class ArduinoMockInstanceGuard
 {
   ArduinoMockImplementation arduinoInstance;
@@ -109,5 +111,11 @@ public:
   ArduinoMockImplementation& operator*();
 };
 
+
+template< typename... Args>
+auto digitalWrite(Args... args) -> decltype(arduinoInstancePointer->digitalWrite(args ...))
+{
+  return arduinoInstancePointer->digitalWrite(args...);
+}
 
 #endif // ARDUINO_H

@@ -1,9 +1,9 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "GlobalMockTemplate.h"
+#include "GlobalMockObjectTemplate.h"
 
-GLOBAL_MOCK_DEFINISION_H(
+GLOBAL_MOCK_OBJECT_DEFINISION_H(
   SomeGlobalObject,
   {
     MOCK_METHOD0(foo, int() );
@@ -14,12 +14,12 @@ GLOBAL_MOCK_DEFINISION_H(
     MOCK_METHOD2(boo, int(int, int) );
   },
   {
-    MOCK_GLOBAL_METHOD(foo, int)
-    MOCK_GLOBAL_METHOD(boo, int)
+    MOCK_OBJECT_GLOBAL_METHOD(foo, int)
+    MOCK_OBJECT_GLOBAL_METHOD(boo, int)
   }
 );
 
-GLOBAL_MOCK_DEFINISION_CPP(SomeGlobalObject);
+GLOBAL_OBJECT_MOCK_DEFINISION_CPP(SomeGlobalObject);
 
 using ::testing::Return;
 using ::testing::_;

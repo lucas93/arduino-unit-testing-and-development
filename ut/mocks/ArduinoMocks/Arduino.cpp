@@ -4,6 +4,7 @@
 
 ArduinoMockImplementation* arduinoInstancePointer = nullptr;
 
+
 ArduinoMockInstanceGuard::ArduinoMockInstanceGuard()
 {
   EXPECT_EQ(nullptr, arduinoInstancePointer)
@@ -63,8 +64,37 @@ RETURN_TYPE FUNCTION_NAME(TYPE1 ARG1, TYPE2 ARG2, TYPE3 ARG3, TYPE4 ARG4) \
   return arduinoInstancePointer->FUNCTION_NAME(ARG1, ARG2, ARG3, ARG4);\
 }\
 
+
+#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(RETURN_TYPE, FUNCTION_NAME)\
+  template< typename... Args>\
+RETURN_TYPE FUNCTION_NAME(Args... args) \
+{\
+  assertArduinoMockWrapperInstanceWasCreated();\
+  return arduinoInstancePointer->FUNCTION_NAME(args...);\
+}
+
+#include <type_traits>
+using A = ArduinoMockImplementation;
+
+
+//auto digitalWrite(uint8_t a, uint8_t b) -> std::result_of<decltype(&A::digitalWrite)(A, uint8_t, uint8_t)>::type
+//{
+//  return arduinoInstancePointer->digitalWrite(a, b);
+//}
+
+//template< typename... Args>
+//auto digitalWrite(Args... args) -> std::result_of<arduinoInstancePointer->digitalWrite(args...)>::type
+//{
+//  return arduinoInstancePointer->digitalWrite(args...);
+//}
+
+template< typename T>
+using type = decltype(arduinoInstancePointer->digitalWrite(T(), T()));
+static_assert(std::is_same<type<int> , void>::value,
+              "digitalWrite() is not void!");
+
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, pinMode, uint8_t, a, uint8_t, b)
-IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, digitalWrite, uint8_t, a, uint8_t, b)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, digitalWrite, uint8_t, a, uint8_t, b)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(int, digitalRead, uint8_t, a)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(int, analogRead, uint8_t, a)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(void, analogReference, uint8_t, mode)

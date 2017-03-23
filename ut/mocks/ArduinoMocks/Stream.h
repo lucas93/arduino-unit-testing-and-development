@@ -18,17 +18,17 @@
   MOCK_METHOD1(readStringUntil, String(char));\
   PRINT_MOCK_METHODS()\
 
-#define STREAM_MOCK_GLOBAL_METHODS()\
-  MOCK_GLOBAL_METHOD(setTimeout, void);\
-  MOCK_GLOBAL_METHOD(find, bool);\
-  MOCK_GLOBAL_METHOD(findUntil, bool);\
-  MOCK_GLOBAL_METHOD(parseInt, long);\
-  MOCK_GLOBAL_METHOD(parseFloat, float);\
-  MOCK_GLOBAL_METHOD(readBytes, size_t);\
-  MOCK_GLOBAL_METHOD(readBytesUntil, size_t);\
-  MOCK_GLOBAL_METHOD(readString, String);\
-  MOCK_GLOBAL_METHOD(readStringUntil, String);\
-  PRINT_MOCK_GLOBAL_METHODS()\
+#define STREAM_MOCK_OBJECT_GLOBAL_METHODS()\
+  MOCK_OBJECT_GLOBAL_METHOD(setTimeout, void);\
+  MOCK_OBJECT_GLOBAL_METHOD(find, bool);\
+  MOCK_OBJECT_GLOBAL_METHOD(findUntil, bool);\
+  MOCK_OBJECT_GLOBAL_METHOD(parseInt, long);\
+  MOCK_OBJECT_GLOBAL_METHOD(parseFloat, float);\
+  MOCK_OBJECT_GLOBAL_METHOD(readBytes, size_t);\
+  MOCK_OBJECT_GLOBAL_METHOD(readBytesUntil, size_t);\
+  MOCK_OBJECT_GLOBAL_METHOD(readString, String);\
+  MOCK_OBJECT_GLOBAL_METHOD(readStringUntil, String);\
+  PRINT_MOCK_OBJECT_GLOBAL_METHODS()\
 
 #endif // STREAM_H
 

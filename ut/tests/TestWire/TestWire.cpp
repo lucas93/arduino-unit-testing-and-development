@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include "GlobalMockTemplate.h"
+#include "GlobalMockObjectTemplate.h"
 
 
 using ::testing::Return;

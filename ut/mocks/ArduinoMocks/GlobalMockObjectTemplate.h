@@ -1,7 +1,7 @@
 #ifndef GLOBAL_MOCK_TEMPLATE_H
 #define GLOBAL_MOCK_TEMPLATE_H
 
-#define MOCK_GLOBAL_METHOD(FUNCTION_NAME, RETURN_TYPE) \
+#define MOCK_OBJECT_GLOBAL_METHOD(FUNCTION_NAME, RETURN_TYPE) \
 template< typename... Args>\
 RETURN_TYPE FUNCTION_NAME (Args... args)\
 {\
@@ -12,8 +12,8 @@ RETURN_TYPE FUNCTION_NAME (Args... args)\
 
 
 
-#define GLOBAL_MOCK_DEFINISION_H(MockName, MOCK_IMPL, MOCK_GLOBAL_IMPL)\
-  namespace MockName##_MockNamestace {\
+#define GLOBAL_MOCK_OBJECT_DEFINISION_H(MockName, MOCK_IMPL, MOCK_GLOBAL_IMPL)\
+namespace MockName##_MockNamestace {\
 struct MockName##_Implementation\
 \
   MOCK_IMPL\
@@ -62,7 +62,7 @@ public:\
 extern MockName##_MockNamestace::MockName##_GlobalObject& MockName;\
 using MockName##_LocalMock = MockName##_MockNamestace::MockName##_LocalMock;
 
-#define GLOBAL_MOCK_DEFINISION_CPP(MockName)\
+#define GLOBAL_OBJECT_MOCK_DEFINISION_CPP(MockName)\
   MockName##_MockNamestace::MockName##_GlobalObject& MockName = MockName##_MockNamestace::MockName##_GlobalObject::getGlobalInstanceReference()\
 
 #endif // GLOBAL_MOCK_TEMPLATE_H

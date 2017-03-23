@@ -23,12 +23,12 @@
 #ifndef HardwareSerial_h
 #define HardwareSerial_h
 
-#include "GlobalMockTemplate.h"
+#include "GlobalMockObjectTemplate.h"
 #include "WString.h"
 #include "Stream.h"
 #include "gmock/gmock.h"
 
-GLOBAL_MOCK_DEFINISION_H(
+GLOBAL_MOCK_OBJECT_DEFINISION_H(
     Serial,
     {
       MOCK_METHOD1(write, size_t(const char *str));
@@ -45,14 +45,14 @@ GLOBAL_MOCK_DEFINISION_H(
       STREAM_MOCK_METHODS();
     },
     {
-      MOCK_GLOBAL_METHOD(write, size_t);
-      MOCK_GLOBAL_METHOD(flush, void);
-      MOCK_GLOBAL_METHOD(end, void);
-      MOCK_GLOBAL_METHOD(begin, uint8_t);
-      MOCK_GLOBAL_METHOD(read, uint8_t);
-      MOCK_GLOBAL_METHOD(available, uint8_t);
+      MOCK_OBJECT_GLOBAL_METHOD(write, size_t);
+      MOCK_OBJECT_GLOBAL_METHOD(flush, void);
+      MOCK_OBJECT_GLOBAL_METHOD(end, void);
+      MOCK_OBJECT_GLOBAL_METHOD(begin, uint8_t);
+      MOCK_OBJECT_GLOBAL_METHOD(read, uint8_t);
+      MOCK_OBJECT_GLOBAL_METHOD(available, uint8_t);
       // inherited from Stream
-      STREAM_MOCK_GLOBAL_METHODS();
+      STREAM_MOCK_OBJECT_GLOBAL_METHODS();
     })
 
 

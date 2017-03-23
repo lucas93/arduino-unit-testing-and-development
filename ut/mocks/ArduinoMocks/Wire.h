@@ -3,13 +3,13 @@
 
 #include <stdint.h>
 #include <gmock/gmock.h>
-#include "GlobalMockTemplate.h"
+#include "GlobalMockObjectTemplate.h"
 #include "WString.h"
 #include "Stream.h"
 
 #define BUFFER_LENGTH 32
 
-GLOBAL_MOCK_DEFINISION_H(
+GLOBAL_MOCK_OBJECT_DEFINISION_H(
   Wire,
   {
     MOCK_METHOD0(begin, void());
@@ -31,19 +31,19 @@ GLOBAL_MOCK_DEFINISION_H(
     STREAM_MOCK_METHODS()
   },
   {
-    MOCK_GLOBAL_METHOD(begin, void);
-    MOCK_GLOBAL_METHOD(beginTransmission, void);
-    MOCK_GLOBAL_METHOD(endTransmission, uint8_t);
-    MOCK_GLOBAL_METHOD(requestFrom, uint8_t);
-    MOCK_GLOBAL_METHOD(write, size_t);
-    MOCK_GLOBAL_METHOD(available, int);
-    MOCK_GLOBAL_METHOD(read, int);
-    MOCK_GLOBAL_METHOD(peek, int);
-    MOCK_GLOBAL_METHOD(flush, void);
-    MOCK_GLOBAL_METHOD(onReceive, void);
-    MOCK_GLOBAL_METHOD(onRequest, void);
+    MOCK_OBJECT_GLOBAL_METHOD(begin, void);
+    MOCK_OBJECT_GLOBAL_METHOD(beginTransmission, void);
+    MOCK_OBJECT_GLOBAL_METHOD(endTransmission, uint8_t);
+    MOCK_OBJECT_GLOBAL_METHOD(requestFrom, uint8_t);
+    MOCK_OBJECT_GLOBAL_METHOD(write, size_t);
+    MOCK_OBJECT_GLOBAL_METHOD(available, int);
+    MOCK_OBJECT_GLOBAL_METHOD(read, int);
+    MOCK_OBJECT_GLOBAL_METHOD(peek, int);
+    MOCK_OBJECT_GLOBAL_METHOD(flush, void);
+    MOCK_OBJECT_GLOBAL_METHOD(onReceive, void);
+    MOCK_OBJECT_GLOBAL_METHOD(onRequest, void);
     //inherited from Stream
-    STREAM_MOCK_GLOBAL_METHODS()
+    STREAM_MOCK_OBJECT_GLOBAL_METHODS()
   });
 
 #endif
