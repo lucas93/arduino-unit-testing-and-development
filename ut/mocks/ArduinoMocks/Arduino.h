@@ -80,35 +80,40 @@ void loop(void);
 
 #define UNUSED(expr) do { (void)(expr); } while (0)
 
-class ArduinoMockImplementation {
-  public:
-    MOCK_METHOD2(pinMode, void (uint8_t, uint8_t));
-    MOCK_METHOD2(analogWrite, void (uint8_t, int));
-    MOCK_METHOD2(digitalWrite, void (uint8_t, uint8_t));
-    MOCK_METHOD1(digitalRead, int (int));
-    MOCK_METHOD1(analogRead, int (int));
-    MOCK_METHOD1(analogReference, void (uint8_t));
-    MOCK_METHOD1(delay, void (int));
-    MOCK_METHOD1(delayMicroseconds, void (unsigned int));
-    MOCK_METHOD0(millis, unsigned long ());
-    MOCK_METHOD0(micros, unsigned long ());
-    MOCK_METHOD3(pulseIn, unsigned long (uint8_t, uint8_t, unsigned long));
-    MOCK_METHOD3(shiftIn, uint8_t (uint8_t, uint8_t, uint8_t));
-    MOCK_METHOD4(shiftOut, void (uint8_t, uint8_t, uint8_t, uint8_t));
-    MOCK_METHOD3(attachInterrupt, void (uint8_t, void (*)(void), int));
-    MOCK_METHOD1(detachInterrupt, void (uint8_t));
-    MOCK_METHOD0(setup, void (void));
-};
+#define GLOBAL_FUNCTIONS_MOCK_IMPLEMENTATION(GLOBAL_NAME, FUNCTION_NAME, MOCK_IMPL)\
+struct GLOBAL_NAME##_MockImplementation \
+    MOCK_IMPL\
+;\
 
-extern ArduinoMockImplementation* arduinoInstancePointer;
-
-class ArduinoMockInstanceGuard
+GLOBAL_FUNCTIONS_MOCK_IMPLEMENTATION(Arduino, foo,
 {
-  ArduinoMockImplementation arduinoInstance;
+  MOCK_METHOD2(pinMode, void (uint8_t, uint8_t));
+  MOCK_METHOD2(analogWrite, void (uint8_t, int));
+  MOCK_METHOD2(digitalWrite, void (uint8_t, uint8_t));
+  MOCK_METHOD1(digitalRead, int (int));
+  MOCK_METHOD1(analogRead, int (int));
+  MOCK_METHOD1(analogReference, void (uint8_t));
+  MOCK_METHOD1(delay, void (int));
+  MOCK_METHOD1(delayMicroseconds, void (unsigned int));
+  MOCK_METHOD0(millis, unsigned long ());
+  MOCK_METHOD0(micros, unsigned long ());
+  MOCK_METHOD3(pulseIn, unsigned long (uint8_t, uint8_t, unsigned long));
+  MOCK_METHOD3(shiftIn, uint8_t (uint8_t, uint8_t, uint8_t));
+  MOCK_METHOD4(shiftOut, void (uint8_t, uint8_t, uint8_t, uint8_t));
+  MOCK_METHOD3(attachInterrupt, void (uint8_t, void (*)(void), int));
+  MOCK_METHOD1(detachInterrupt, void (uint8_t));
+  MOCK_METHOD0(setup, void (void));
+})
+
+extern Arduino_MockImplementation* arduinoInstancePointer;
+
+class Arduino_MockInstanceGuard
+{
+  Arduino_MockImplementation Arduino_Instance;
 public:
-  ArduinoMockInstanceGuard();
-  ~ArduinoMockInstanceGuard();
-  ArduinoMockImplementation& operator*();
+  Arduino_MockInstanceGuard();
+  ~Arduino_MockInstanceGuard();
+  Arduino_MockImplementation& operator*();
 };
 
 

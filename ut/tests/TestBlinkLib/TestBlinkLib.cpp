@@ -6,7 +6,7 @@
 
 TEST(BlinkLibTests, ShouldSetupCorrectly)
 {
-  ArduinoMockInstanceGuard Arduino{};
+  Arduino_MockInstanceGuard Arduino{};
   auto pin = 13;
   EXPECT_CALL(*Arduino, pinMode(pin, OUTPUT));
   blink_setup(pin);
@@ -14,7 +14,7 @@ TEST(BlinkLibTests, ShouldSetupCorrectly)
 
 TEST(BlinkLibTests, WhenSetupCorrectly_ShouldBlinkCorrectly)
 {
-  ArduinoMockInstanceGuard Arduino{};
+  Arduino_MockInstanceGuard Arduino{};
   auto pin = 13;
   auto duration = 500ul;
   EXPECT_CALL(*Arduino, pinMode(pin, OUTPUT));

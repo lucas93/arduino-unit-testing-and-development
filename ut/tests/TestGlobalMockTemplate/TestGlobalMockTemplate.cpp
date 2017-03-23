@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "GlobalMockObjectTemplate.h"
+#include "GlobalObjectMockTemplate.h"
 
 GLOBAL_MOCK_OBJECT_DEFINISION_H(
   SomeGlobalObject,

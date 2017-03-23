@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <gmock/gmock.h>
-#include "GlobalMockObjectTemplate.h"
+#include "GlobalObjectMockTemplate.h"
 #include "WString.h"
 #include "Stream.h"
 

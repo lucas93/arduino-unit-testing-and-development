@@ -23,7 +23,7 @@
 #ifndef HardwareSerial_h
 #define HardwareSerial_h
 
-#include "GlobalMockObjectTemplate.h"
+#include "GlobalObjectMockTemplate.h"
 #include "WString.h"
 #include "Stream.h"
 #include "gmock/gmock.h"

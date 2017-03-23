@@ -1,5 +1,5 @@
-#ifndef GLOBAL_MOCK_TEMPLATE_H
-#define GLOBAL_MOCK_TEMPLATE_H
+#ifndef GLOBAL_OBJECT_MOCK_TEMPLATE_H
+#define GLOBAL_OBJECT_MOCK_TEMPLATE_H
 
 #define MOCK_OBJECT_GLOBAL_METHOD(FUNCTION_NAME, RETURN_TYPE) \
 template< typename... Args>\
@@ -65,4 +65,4 @@ using MockName##_LocalMock = MockName##_MockNamestace::MockName##_LocalMock;
 #define GLOBAL_OBJECT_MOCK_DEFINISION_CPP(MockName)\
   MockName##_MockNamestace::MockName##_GlobalObject& MockName = MockName##_MockNamestace::MockName##_GlobalObject::getGlobalInstanceReference()\
 
-#endif // GLOBAL_MOCK_TEMPLATE_H
+#endif // GLOBAL_OBJECT_MOCK_TEMPLATE_H

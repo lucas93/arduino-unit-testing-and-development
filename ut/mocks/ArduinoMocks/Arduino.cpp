@@ -2,24 +2,24 @@
 #include <gtest/gtest.h>
 #include <memory>
 
-ArduinoMockImplementation* arduinoInstancePointer = nullptr;
+Arduino_MockImplementation* arduinoInstancePointer = nullptr;
 
 
-ArduinoMockInstanceGuard::ArduinoMockInstanceGuard()
+Arduino_MockInstanceGuard::Arduino_MockInstanceGuard()
 {
   EXPECT_EQ(nullptr, arduinoInstancePointer)
       << "Are you trying to instantiate multiple ArduinoMockWrappers in the same scope?";
-  arduinoInstancePointer = &arduinoInstance;
+  arduinoInstancePointer = &Arduino_Instance;
 }
 
-ArduinoMockInstanceGuard::~ArduinoMockInstanceGuard()
+Arduino_MockInstanceGuard::~Arduino_MockInstanceGuard()
 {
   arduinoInstancePointer = nullptr;
 }
 
-ArduinoMockImplementation& ArduinoMockInstanceGuard::operator*()
+Arduino_MockImplementation& Arduino_MockInstanceGuard::operator*()
 {
-  return arduinoInstance;
+  return Arduino_Instance;
 }
 
 
@@ -74,7 +74,7 @@ RETURN_TYPE FUNCTION_NAME(Args... args) \
 }
 
 #include <type_traits>
-using A = ArduinoMockImplementation;
+using A = Arduino_MockImplementation;
 
 
 //auto digitalWrite(uint8_t a, uint8_t b) -> std::result_of<decltype(&A::digitalWrite)(A, uint8_t, uint8_t)>::type
