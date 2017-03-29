@@ -105,22 +105,24 @@ GLOBAL_FUNCTIONS_MOCK_IMPLEMENTATION(Arduino, foo,
   MOCK_METHOD0(setup, void (void));
 })
 
-extern Arduino_MockImplementation* arduinoInstancePointer;
-
-class Arduino_MockInstanceGuard
+class Arduino_MockInstanceGuard : public Arduino_MockImplementation
 {
-  Arduino_MockImplementation Arduino_Instance;
 public:
   Arduino_MockInstanceGuard();
   ~Arduino_MockInstanceGuard();
-  Arduino_MockImplementation& operator*();
 };
 
+extern Arduino_MockInstanceGuard* arduinoInstancePointer;
 
-template< typename... Args>
-auto digitalWrite(Args... args) -> decltype(arduinoInstancePointer->digitalWrite(args ...))
-{
-  return arduinoInstancePointer->digitalWrite(args...);
+#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(FUNCTION_NAME)\
+template< typename... Args>\
+auto FUNCTION_NAME(Args... args) -> decltype(arduinoInstancePointer->FUNCTION_NAME(args ...))\
+{\
+  EXPECT_NE(nullptr, arduinoInstancePointer);\
+  return arduinoInstancePointer->FUNCTION_NAME(args...);\
 }
+
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(digitalWrite)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(attachInterrupt)
 
 #endif // ARDUINO_H

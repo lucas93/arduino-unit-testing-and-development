@@ -2,24 +2,19 @@
 #include <gtest/gtest.h>
 #include <memory>
 
-Arduino_MockImplementation* arduinoInstancePointer = nullptr;
+Arduino_MockInstanceGuard* arduinoInstancePointer = nullptr;
 
 
 Arduino_MockInstanceGuard::Arduino_MockInstanceGuard()
 {
   EXPECT_EQ(nullptr, arduinoInstancePointer)
       << "Are you trying to instantiate multiple ArduinoMockWrappers in the same scope?";
-  arduinoInstancePointer = &Arduino_Instance;
+  arduinoInstancePointer = this;
 }
 
 Arduino_MockInstanceGuard::~Arduino_MockInstanceGuard()
 {
   arduinoInstancePointer = nullptr;
-}
-
-Arduino_MockImplementation& Arduino_MockInstanceGuard::operator*()
-{
-  return Arduino_Instance;
 }
 
 
@@ -65,28 +60,13 @@ RETURN_TYPE FUNCTION_NAME(TYPE1 ARG1, TYPE2 ARG2, TYPE3 ARG3, TYPE4 ARG4) \
 }\
 
 
-#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(RETURN_TYPE, FUNCTION_NAME)\
-  template< typename... Args>\
-RETURN_TYPE FUNCTION_NAME(Args... args) \
-{\
-  assertArduinoMockWrapperInstanceWasCreated();\
-  return arduinoInstancePointer->FUNCTION_NAME(args...);\
-}
-
-#include <type_traits>
-using A = Arduino_MockImplementation;
-
-
-//auto digitalWrite(uint8_t a, uint8_t b) -> std::result_of<decltype(&A::digitalWrite)(A, uint8_t, uint8_t)>::type
-//{
-//  return arduinoInstancePointer->digitalWrite(a, b);
+//#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(FUNCTION_NAME)\
+//template< typename... Args>\
+//auto FUNCTION_NAME(Args... args) -> decltype(arduinoInstancePointer->FUNCTION_NAME(args ...))\
+//{\
+//  return arduinoInstancePointer->FUNCTION_NAME(args...);\
 //}
 
-//template< typename... Args>
-//auto digitalWrite(Args... args) -> std::result_of<arduinoInstancePointer->digitalWrite(args...)>::type
-//{
-//  return arduinoInstancePointer->digitalWrite(args...);
-//}
 
 template< typename T>
 using type = decltype(arduinoInstancePointer->digitalWrite(T(), T()));
@@ -107,9 +87,9 @@ IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_3(unsigned long, pulseIn, uint8_t, pin,
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_4(void, shiftOut, uint8_t, dataPin, uint8_t, clockPin, uint8_t, bitOrder, uint8_t, val)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_3(uint8_t, shiftIn, uint8_t, dataPin, uint8_t, clockPin, uint8_t, bitOrder)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(void, detachInterrupt, uint8_t, pin)
-void attachInterrupt(uint8_t interruptNum, void (*userFunc)(void), int mode)
-{ //function pointer needs a unique implementation
-  assertArduinoMockWrapperInstanceWasCreated();\
-  return arduinoInstancePointer->attachInterrupt(interruptNum, userFunc, mode);
-}
+//void attachInterrupt(uint8_t interruptNum, void (*userFunc)(void), int mode)
+//{ //function pointer needs a unique implementation
+//  assertArduinoMockWrapperInstanceWasCreated();\
+//  return arduinoInstancePointer->attachInterrupt(interruptNum, userFunc, mode);
+//}
 
