@@ -1,9 +1,9 @@
 #ifndef GLOBAL_OBJECT_MOCK_TEMPLATE_H
 #define GLOBAL_OBJECT_MOCK_TEMPLATE_H
 
-#define MOCK_OBJECT_GLOBAL_METHOD(FUNCTION_NAME, RETURN_TYPE) \
+#define MOCK_OBJECT_GLOBAL_METHOD(FUNCTION_NAME) \
 template< typename... Args>\
-RETURN_TYPE FUNCTION_NAME (Args... args)\
+auto FUNCTION_NAME (Args... args) -> decltype(mockPointer->FUNCTION_NAME(args...)) \
 {\
   EXPECT_NE(nullptr, mockPointer)\
     << "Are you trying to use a global mock without creating a local mock instance?";\

@@ -17,9 +17,9 @@ MOCK_METHOD1(print, size_t(const String&));\
 MOCK_METHOD1(println, size_t(const String&));\
 
 #define PRINT_MOCK_OBJECT_GLOBAL_METHODS()\
-MOCK_OBJECT_GLOBAL_METHOD(getWriteError, int);\
-MOCK_OBJECT_GLOBAL_METHOD(clearWriteError, void);\
-MOCK_OBJECT_GLOBAL_METHOD(print, size_t);\
-MOCK_OBJECT_GLOBAL_METHOD(println, size_t);\
+MOCK_OBJECT_GLOBAL_METHOD(getWriteError);\
+MOCK_OBJECT_GLOBAL_METHOD(clearWriteError);\
+MOCK_OBJECT_GLOBAL_METHOD(print);\
+MOCK_OBJECT_GLOBAL_METHOD(println);\
 
 #endif //PRINT_H

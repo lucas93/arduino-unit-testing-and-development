@@ -45,12 +45,12 @@ GLOBAL_MOCK_OBJECT_DEFINISION_H(
       STREAM_MOCK_METHODS();
     },
     {
-      MOCK_OBJECT_GLOBAL_METHOD(write, size_t);
-      MOCK_OBJECT_GLOBAL_METHOD(flush, void);
-      MOCK_OBJECT_GLOBAL_METHOD(end, void);
-      MOCK_OBJECT_GLOBAL_METHOD(begin, uint8_t);
-      MOCK_OBJECT_GLOBAL_METHOD(read, uint8_t);
-      MOCK_OBJECT_GLOBAL_METHOD(available, uint8_t);
+      MOCK_OBJECT_GLOBAL_METHOD(write);
+      MOCK_OBJECT_GLOBAL_METHOD(flush);
+      MOCK_OBJECT_GLOBAL_METHOD(end);
+      MOCK_OBJECT_GLOBAL_METHOD(begin);
+      MOCK_OBJECT_GLOBAL_METHOD(read);
+      MOCK_OBJECT_GLOBAL_METHOD(available);
       // inherited from Stream
       STREAM_MOCK_OBJECT_GLOBAL_METHODS();
     })

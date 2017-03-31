@@ -60,21 +60,9 @@ RETURN_TYPE FUNCTION_NAME(TYPE1 ARG1, TYPE2 ARG2, TYPE3 ARG3, TYPE4 ARG4) \
 }\
 
 
-//#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(FUNCTION_NAME)\
-//template< typename... Args>\
-//auto FUNCTION_NAME(Args... args) -> decltype(arduinoInstancePointer->FUNCTION_NAME(args ...))\
-//{\
-//  return arduinoInstancePointer->FUNCTION_NAME(args...);\
-//}
-
-
-template< typename T>
-using type = decltype(arduinoInstancePointer->digitalWrite(T(), T()));
-static_assert(std::is_same<type<int> , void>::value,
-              "digitalWrite() is not void!");
 
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, pinMode, uint8_t, a, uint8_t, b)
-//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, digitalWrite, uint8_t, a, uint8_t, b)
+IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_2(void, digitalWrite, uint8_t, a, uint8_t, b)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(int, digitalRead, uint8_t, a)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(int, analogRead, uint8_t, a)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(void, analogReference, uint8_t, mode)
@@ -87,9 +75,32 @@ IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_3(unsigned long, pulseIn, uint8_t, pin,
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_4(void, shiftOut, uint8_t, dataPin, uint8_t, clockPin, uint8_t, bitOrder, uint8_t, val)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_3(uint8_t, shiftIn, uint8_t, dataPin, uint8_t, clockPin, uint8_t, bitOrder)
 IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL_1(void, detachInterrupt, uint8_t, pin)
-//void attachInterrupt(uint8_t interruptNum, void (*userFunc)(void), int mode)
-//{ //function pointer needs a unique implementation
-//  assertArduinoMockWrapperInstanceWasCreated();\
-//  return arduinoInstancePointer->attachInterrupt(interruptNum, userFunc, mode);
+void attachInterrupt(uint8_t interruptNum, void (*userFunc)(void), int mode)
+{ //function pointer needs a unique implementation
+  assertArduinoMockWrapperInstanceWasCreated();\
+  return arduinoInstancePointer->attachInterrupt(interruptNum, userFunc, mode);
+}
+
+//#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(FUNCTION_NAME)\
+//template< typename... Args>\
+//auto FUNCTION_NAME(Args... args) -> decltype(arduinoInstancePointer->FUNCTION_NAME(args ...))\
+//{\
+//  EXPECT_NE(nullptr, arduinoInstancePointer);\
+//  return arduinoInstancePointer->FUNCTION_NAME(args...);\
 //}
 
+
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(digitalWrite)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(attachInterrupt)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(pinMode)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(digitalRead)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(analogRead)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(analogReference)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(analogWrite)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(millis)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(micros)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(void, delay)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(pulseIn)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(shiftOut)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(shiftIn)
+//IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(detachInterrupt)

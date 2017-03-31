@@ -114,15 +114,6 @@ public:
 
 extern Arduino_MockInstanceGuard* arduinoInstancePointer;
 
-#define IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(FUNCTION_NAME)\
-template< typename... Args>\
-auto FUNCTION_NAME(Args... args) -> decltype(arduinoInstancePointer->FUNCTION_NAME(args ...))\
-{\
-  EXPECT_NE(nullptr, arduinoInstancePointer);\
-  return arduinoInstancePointer->FUNCTION_NAME(args...);\
-}
 
-IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(digitalWrite)
-IMPLEMENT_FUNCTION_AS_OBJECT_METHOD_CALL(attachInterrupt)
 
 #endif // ARDUINO_H

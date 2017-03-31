@@ -31,17 +31,17 @@ GLOBAL_MOCK_OBJECT_DEFINISION_H(
     STREAM_MOCK_METHODS()
   },
   {
-    MOCK_OBJECT_GLOBAL_METHOD(begin, void);
-    MOCK_OBJECT_GLOBAL_METHOD(beginTransmission, void);
-    MOCK_OBJECT_GLOBAL_METHOD(endTransmission, uint8_t);
-    MOCK_OBJECT_GLOBAL_METHOD(requestFrom, uint8_t);
-    MOCK_OBJECT_GLOBAL_METHOD(write, size_t);
-    MOCK_OBJECT_GLOBAL_METHOD(available, int);
-    MOCK_OBJECT_GLOBAL_METHOD(read, int);
-    MOCK_OBJECT_GLOBAL_METHOD(peek, int);
-    MOCK_OBJECT_GLOBAL_METHOD(flush, void);
-    MOCK_OBJECT_GLOBAL_METHOD(onReceive, void);
-    MOCK_OBJECT_GLOBAL_METHOD(onRequest, void);
+    MOCK_OBJECT_GLOBAL_METHOD(begin);
+    MOCK_OBJECT_GLOBAL_METHOD(beginTransmission);
+    MOCK_OBJECT_GLOBAL_METHOD(endTransmission);
+    MOCK_OBJECT_GLOBAL_METHOD(requestFrom);
+    MOCK_OBJECT_GLOBAL_METHOD(write);
+    MOCK_OBJECT_GLOBAL_METHOD(available);
+    MOCK_OBJECT_GLOBAL_METHOD(read);
+    MOCK_OBJECT_GLOBAL_METHOD(peek);
+    MOCK_OBJECT_GLOBAL_METHOD(flush);
+    MOCK_OBJECT_GLOBAL_METHOD(onReceive);
+    MOCK_OBJECT_GLOBAL_METHOD(onRequest);
     //inherited from Stream
     STREAM_MOCK_OBJECT_GLOBAL_METHODS()
   });

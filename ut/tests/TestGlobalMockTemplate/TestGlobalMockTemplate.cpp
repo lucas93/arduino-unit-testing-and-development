@@ -14,8 +14,8 @@ GLOBAL_MOCK_OBJECT_DEFINISION_H(
     MOCK_METHOD2(boo, int(int, int) );
   },
   {
-    MOCK_OBJECT_GLOBAL_METHOD(foo, int)
-    MOCK_OBJECT_GLOBAL_METHOD(boo, int)
+    MOCK_OBJECT_GLOBAL_METHOD(foo)
+    MOCK_OBJECT_GLOBAL_METHOD(boo)
   }
 );
 
