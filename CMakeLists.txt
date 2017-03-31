@@ -27,6 +27,9 @@ add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
 set(GOOGLE_TEST_INCLUDE_DIRECTORY "${googletest_SOURCE_DIR}/googletest/include")
 set(GOOGLE_MOCK_INCLUDE_DIRECTORY "${googletest_SOURCE_DIR}/googlemock/include")
 
+
+#---- This part is just for auto-picking all sources and header files --------------------
+#---- in project directory. Feel free to choose files in a different way -----------------
 set( UNIT_TESTS_DIRECTORY               "${CMAKE_CURRENT_SOURCE_DIR}/ut/tests")
 set( MOCKS_DIRECTORY                    "${CMAKE_CURRENT_SOURCE_DIR}/ut/mocks")
 set( APPLICATION_SOURCES_DIRECTORY      "${CMAKE_CURRENT_SOURCE_DIR}/application")
@@ -41,6 +44,8 @@ GetListOfAllFilesInSubDirectories(  MOCKS_SOURCES       ${MOCKS_DIRECTORY}      
 GetListOfAllFilesInSubDirectories(  MOCKS_HEADERS       ${MOCKS_DIRECTORY}                  "*.h")
 GetListOfAllFilesInSubDirectories(  APPLICATION_SOURCES ${APPLICATION_SOURCES_DIRECTORY}    "*.cpp")
 GetListOfAllFilesInSubDirectories(  APPLICATION_HEADERS ${APPLICATION_SOURCES_DIRECTORY}    "*.h")
+#-----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------
 
 add_executable(unit_tests
     ${UNIT_TESTS_SOURCES}
@@ -54,10 +59,6 @@ include_directories(
     ${UNIT_TESTS_SUBDIRECTORIES}
     ${GOOGLE_TEST_INCLUDE_DIRECTORY}
     ${GOOGLE_MOCK_INCLUDE_DIRECTORY})
-
-#target_include_directories(unit_tests   PUBLIC
-#   "${APPLICATION_SOURCES_SUBDIRECTORIES}   ${MOCKS_SUBDIRECTORIES} \
-#    ${GOOGLE_TEST_INCLUDE_DIRECTORY}        ${GOOGLE_MOCK_INCLUDE_DIRECTORY}")
 
 target_link_libraries(unit_tests gtest gmock_main)
 add_test(NAME unit_tests COMMAND unit_tests)
