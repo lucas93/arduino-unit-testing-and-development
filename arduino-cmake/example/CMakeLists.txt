@@ -3,13 +3,29 @@ set(ARDUINO_DEFAULT_PORT /dev/ttyUSB0) # Default Port, when not specified
 
 include(../../utilities.cmake)
 
-set(SOURCES_MAIN_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/../../application")
 
-INCLUDE_DIRECTORIES("${SOURCES_MAIN_DIRECTORY}/BaseClass/")
+
+# INCLUDE_DIRECTORIES("${SOURCES_MAIN_DIRECTORY}/BaseClass/")
+
+#---- This part is just for auto-picking all sources and header files --------------------
+#---- in project directory. Feel free to choose files in a different way -----------------
+
+set( SOURCES_MAIN_DIRECTORY  "${CMAKE_CURRENT_LIST_DIR}/../../application")
+
+#GetListOfSubDirectories( SOURCES_SUBDIRECTORIES     ${SOURCES_MAIN_DIRECTORY})
+
+GetListOfAllFilesInSubDirectories(  APP_SOURCES  ${SOURCES_MAIN_DIRECTORY}      "*.cpp")
+GetListOfAllFilesInSubDirectories(  APP_HEADERS  ${SOURCES_MAIN_DIRECTORY}      "*.h")
+
+print_foreach(APP_SOURCES)
+print_foreach(APP_HEADERS)
+
+#-----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------
 
 generate_arduino_firmware(blink
-    SRCS blink.cpp blink_lib.cpp "/home/lukasz/workspace/test-repo/application/BaseClass/BaseClass.cpp"
-    HDRS blink_lib.h "${SOURCES_MAIN_DIRECTORY}/BaseClass/BaseClass.h"
+    SRCS blink.cpp "${APP_SOURCES}"
+    HDRS           "${APP_HEADERS}"
     ARDLIBS SPI Wire
     BOARD uno)
 
