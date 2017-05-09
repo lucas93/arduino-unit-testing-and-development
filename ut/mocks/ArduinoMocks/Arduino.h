@@ -5,6 +5,7 @@
 #define ARDUINO_H
 
 #include <stdint.h>
+#include <GlobalMockFunctionsTemplate.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -80,12 +81,9 @@ void loop(void);
 
 #define UNUSED(expr) do { (void)(expr); } while (0)
 
-#define GLOBAL_FUNCTIONS_MOCK_IMPLEMENTATION(GLOBAL_NAME, FUNCTION_NAME, MOCK_IMPL)\
-struct GLOBAL_NAME##_MockImplementation \
-    MOCK_IMPL\
-;\
 
-GLOBAL_FUNCTIONS_MOCK_IMPLEMENTATION(Arduino, foo,
+
+GLOBAL_FUNCTIONS_MOCK_IMPLEMENTATION_H(Arduino,
 {
   MOCK_METHOD2(pinMode, void (uint8_t, uint8_t));
   MOCK_METHOD2(analogWrite, void (uint8_t, int));
@@ -105,14 +103,7 @@ GLOBAL_FUNCTIONS_MOCK_IMPLEMENTATION(Arduino, foo,
   MOCK_METHOD0(setup, void (void));
 })
 
-class Arduino_MockInstanceGuard : public Arduino_MockImplementation
-{
-public:
-  Arduino_MockInstanceGuard();
-  ~Arduino_MockInstanceGuard();
-};
 
-extern Arduino_MockInstanceGuard* arduinoInstancePointer;
 
 
 
