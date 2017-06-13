@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.2)
 
-project(DP_Example)
+project(Arduino_Unit_Test_Example)
 
 include(CTest)
 include(utilities.cmake)
