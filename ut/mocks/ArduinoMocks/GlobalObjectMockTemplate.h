@@ -3,11 +3,11 @@
 
 #define MOCK_OBJECT_GLOBAL_METHOD(FUNCTION_NAME) \
 template< typename... Args>\
-auto FUNCTION_NAME (Args... args) -> decltype(mockPointer->FUNCTION_NAME(args...)) \
+decltype(auto) FUNCTION_NAME (Args&&... args)\
 {\
   EXPECT_NE(nullptr, mockPointer)\
     << "Are you trying to use a global mock without creating a local mock instance?";\
-  return mockPointer->FUNCTION_NAME(args...);\
+  return mockPointer->FUNCTION_NAME(std::forward<Args>(args)...);\
 }\
 
 
